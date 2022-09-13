@@ -14,7 +14,7 @@ const routes = [
     props: route => ({ page: parseInt(route.query.page) || 1 })
   },
   {
-    path: '/event/:id',
+    path: '/events/:id',
     name: 'EventLayout',
     props: true,
     component: EventLayout,
@@ -37,9 +37,20 @@ const routes = [
     ]
   },
   {
-    path: '/about',
+    path: '/event/:afterEvent(.*)',
+    redirect: to => {
+      return { path: '/events/' + to.params.afterEvent }
+    }
+  },
+  {
+    path: '/about-us',
     name: 'About',
     component: About
+    // alias: '/about' -> this solution is worst for SEO because it'll have both content in two different places
+  },
+  {
+    path: '/about',
+    redirect: { name: 'About' }
   }
 ]
 
